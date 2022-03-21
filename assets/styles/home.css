@@ -1,2 +1,12 @@
-h1 {
-  color: white; }
+#create-project {
+  color: white;
+  display: inline-block;
+  width: 30%;
+  border: 1px solid white; }
+
+#projects-list {
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+  width: 68%;
+  border: 1px solid blue; }

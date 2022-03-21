@@ -9,10 +9,10 @@ const issueSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    labels: [
+    labels: [ 
         {
             type: String
-        }
+        },
     ],
     author: {
         type: String,

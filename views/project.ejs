@@ -1,0 +1,23 @@
+
+<h2>Project Name - <%= project.name %></h2>
+<p><%= project.description %></p>
+<h2>Create an issue</h2> 
+<form action="/issue/create" method="post">
+    <input type="text" name="title" placeholder="Enter title of your issue"><br>
+    <textarea name="description" id="" cols="30" rows="3" placeholder="Enter issue desription"></textarea><br>
+    <label for="labels">Select Issue label</label><br>
+    <select name="labels"  multiple>
+        <option value="bug">bug</option>
+        <option value="dependencies">dependencies</option>
+        <option value="duplicate">duplicate</option>
+        <option value="enhancement">enhancement</option>
+        <option value="help">help</option>
+        <option value="inprogress">inprogress</option>
+        <option value="invalid">invalid</option>
+        <option value="question">question</option>
+        <option value="wontfix">wontfix</option>
+    </select><br>
+    <input type="text" name="author" placeholder="Enter author name"><br>
+    <input type="hidden" name="project" value= '<%= project._id %>'><br>
+    <button type="submit">Submit</button>
+</form>       

@@ -1,2 +1,32 @@
 <link rel="stylesheet" href="/styles/home.css">
-    <h1><%= content %></h1>
+<div id="create-project">
+    <h2>Create Project</h2>
+    <form action="/project/create" method="post">
+        <input type="text" name="name" placeholder="Enter Project Name"><br>
+        <textarea name="description" cols="30" rows="3" placeholder="Enter roject description"></textarea>
+        <br><input type="text" name="author" placeholder="Enter author name"><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<div id="projects-list">
+    <h1>Projects List</h1>
+    <div class="project">
+        <ul>
+            <% for(let i of projects) { %>
+                <a href="/project/info/<%= i._id%>">
+                    <li>
+                        <%= i.name %>
+                        <br>
+                        <%= i.description %>
+                        <br>
+                        <%= i.author %>
+                        <br>
+                        Issues:&nbsp; <%= i.issues.length %>
+                    </li>
+                </a>
+             <% } %>
+        </ul>
+    </div>
+</div>
+
+
