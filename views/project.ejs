@@ -20,4 +20,46 @@
     <input type="text" name="author" placeholder="Enter author name"><br>
     <input type="hidden" name="project" value= '<%= project._id %>'><br>
     <button type="submit">Submit</button>
-</form>       
+</form>  
+<br><br>
+<h2>Search Issue</h2>
+<form action="/project/search" method="post">
+    <input type="hidden" name="project" value= '<%= project._id %>'>
+    <input type="text" name="search" placeholder="Enter title to search">
+    <button type="submit">Submit</button>
+</form> 
+<br><br>
+<h2>Filters</h2>
+<form action="/project/filter" method="post">
+    <label for="labels">Select Label</label>
+    <select name="labels" multiple>
+        <option value="bug">bug</option>
+        <option value="dependencies">dependencies</option>
+        <option value="duplicate">duplicate</option>
+        <option value="enhancement">enhancement</option>
+        <option value="help">help</option>
+        <option value="inprogress">inprogress</option>
+        <option value="invalid">invalid</option>
+        <option value="question">question</option>
+        <option value="wontfix">wontfix</option>
+    </select>
+    <label for="author">Select Author</label>
+    <select name="author" multiple>
+        <% for(let issue of project.issues) { %>
+            <option value="<%= issue.author %>"><%= issue.author %></option>
+         <% } %>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+<%= project.name %>
+<% for(let issue of project.issues) { %>
+    <li>
+        <%= issue.title %> <br>
+        <% for(let label of issue.labels) { %>
+            <%= label %>
+        <% } %>
+    </li>
+ <% } %>
+
+
+<div></div>    
