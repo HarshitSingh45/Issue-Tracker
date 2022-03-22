@@ -1,66 +1,91 @@
+<link rel="stylesheet" href="/styles/addIssue.css">
+<link rel="stylesheet" href="/styles/issue.css">
+<div id="heading">
+    <h1 style="text-align: center;"><%= project.name %> - Issues</h1>
+</div>
+<div id="modal" class="myModal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 style="text-align: center ; color: #04aa6d;">Enter Issue Details</h2>
+        <form action="/issue/create" method="post">
+            <input type="text" name="title" placeholder="Enter title of your issue"><br>
+            <textarea name="description" id="" cols="30" rows="3" placeholder="Enter issue desription"></textarea><br>
+            <label for="labels">Select Issue label</label><br>
+            <select name="labels"  multiple>
+                <option value="bug">bug</option>
+                <option value="dependencies">dependencies</option>
+                <option value="duplicate">duplicate</option>
+                <option value="enhancement">enhancement</option>
+                <option value="help">help</option>
+                <option value="inprogress">inprogress</option>
+                <option value="invalid">invalid</option>
+                <option value="question">question</option>
+                <option value="wontfix">wontfix</option>
+            </select><br>
+            <input type="text" name="author" placeholder="Enter author name"><br>
+            <input type="hidden" name="project" value= '<%= project._id %>'><br>
+            <button id="btn" type="submit">Submit</button>
+        </form> 
+    </div>
+</div>
+<div id="search-issue">
+    <form action="/project/search" method="post">
+        <input type="hidden" name="project" value= '<%= project._id %>'>
+        <input id="search-title" type="text" name="search" placeholder="Enter title to search">
+        <button id="sbtn" type="submit">Submit</button>
+    </form> 
+</div>
+<div id="filters">
+    <div style="text-align: center;">
+        <button id="fbtn">Add - Filters</button>
+   </div>
+    <div id="select-filter">
+        <span id="hbtn" class="close">&times;</span>
+        <form action="/project/filter" method="post">
+            <label for="labels">Select Label</label><br>
+            <input type="checkbox" name="labels" value="bug">Bug &nbsp;
+            <input type="checkbox" name="labels" value="dependencies">dependencies &nbsp;
+            <input type="checkbox" name="labels" value="duplicate">duplicate &nbsp;
+            <input type="checkbox" name="labels" value="enhancement">enhancement &nbsp;
+            <input type="checkbox" name="labels" value="help">help &nbsp;
+            <input type="checkbox" name="labels" value="inprogress">inprogress &nbsp;
+            <input type="checkbox" name="labels" value="invalid">invalid &nbsp;
+            <input type="checkbox" name="labels" value="question">question &nbsp;
+            <input type="checkbox" name="labels" value="wontfix">wontfix
+             <br><br>
+            <label for="author">Select Author</label><br>
+                <% for(let issue of issues) { %>
+                    <input type="checkbox" name="author" value="<%= issue.author %>"><%= issue.author %>
+                 <% } %>
+             <br><br>
+            <input type="hidden" name="project" value= '<%= project._id %>'>
+            <div style="text-align: center;">
+                <button class="btn" type="submit">Submit</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<div id="issue-container">
+    <!-- <%= project.name %> -->
+    <% for(let issue of issues) { %>
+        <div id="issue">
+            <div style="text-align: center;">
+                <h2 class="green"><%= issue.title %> </h2>
+            </div>
+            <p><span class="green">Issue Description </span> : <%= issue.description %></p>
+            <p><span class="green">Author </span> : <%= issue.author %> </p>
+            <p><span class="green">Issue - Labels</span> :</p>
+            <% for(let label of issue.labels) { %>
+                <span class="label"><%= label %></span>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+<div id="addBtn">
+    <button id="myBtn">+ Add Issue</button>
+</div>
 
-<h2>Project Name - <%= project.name %></h2>
-<p><%= project.description %></p>
-<h2>Create an issue</h2> 
-<form action="/issue/create" method="post">
-    <input type="text" name="title" placeholder="Enter title of your issue"><br>
-    <textarea name="description" id="" cols="30" rows="3" placeholder="Enter issue desription"></textarea><br>
-    <label for="labels">Select Issue label</label><br>
-    <select name="labels"  multiple>
-        <option value="bug">bug</option>
-        <option value="dependencies">dependencies</option>
-        <option value="duplicate">duplicate</option>
-        <option value="enhancement">enhancement</option>
-        <option value="help">help</option>
-        <option value="inprogress">inprogress</option>
-        <option value="invalid">invalid</option>
-        <option value="question">question</option>
-        <option value="wontfix">wontfix</option>
-    </select><br>
-    <input type="text" name="author" placeholder="Enter author name"><br>
-    <input type="hidden" name="project" value= '<%= project._id %>'><br>
-    <button type="submit">Submit</button>
-</form>  
-<br><br>
-<h2>Search Issue</h2>
-<form action="/project/search" method="post">
-    <input type="hidden" name="project" value= '<%= project._id %>'>
-    <input type="text" name="search" placeholder="Enter title to search">
-    <button type="submit">Submit</button>
-</form> 
-<br><br>
-<h2>Filters</h2>
-<form action="/project/filter" method="post">
-    <label for="labels">Select Label</label>
-    <select name="labels" multiple>
-        <option value="bug">bug</option>
-        <option value="dependencies">dependencies</option>
-        <option value="duplicate">duplicate</option>
-        <option value="enhancement">enhancement</option>
-        <option value="help">help</option>
-        <option value="inprogress">inprogress</option>
-        <option value="invalid">invalid</option>
-        <option value="question">question</option>
-        <option value="wontfix">wontfix</option>
-    </select>
-    <label for="author">Select Author</label>
-    <select name="author" multiple>
-        <% for(let issue of issues) { %>
-            <option value="<%= issue.author %>"><%= issue.author %></option>
-         <% } %>
-    </select>
-    <input type="hidden" name="project" value= '<%= project._id %>'><br>
-    <button type="submit">Submit</button>
-</form>
-<%= project.name %>
-<% for(let issue of issues) { %>
-    <li>
-        <%= issue.title %> <br>
-        <% for(let label of issue.labels) { %>
-            <%= label %>
-        <% } %>
-    </li>
- <% } %>
+<script src="/scripts/addIssue.js"></script>
+<script src="/scripts/issue.js"></script>
 
-
-<div></div>    
