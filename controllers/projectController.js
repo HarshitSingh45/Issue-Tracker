@@ -14,14 +14,14 @@ module.exports.create = async (req, res) =>{
 module.exports.projectInfo = async (req, res) => {
     try{
         console.log(req.params.id);
-        let project = await Project.findById(req.params.id).populate('issues');
-        // let issues = await Issue.find({project: req.params.id});
+        let project = await Project.findById(req.params.id);
+        let issues = await Issue.find({project: req.params.id});
 
         
         return res.render('project',{
             tittle: 'Project Page',
             project: project,
-            // issues: issues
+            issues: issues
         });
     }catch(err){
         console.log('error in opening project page ', err)
@@ -49,15 +49,15 @@ module.exports.search = async (req, res) => {
 module.exports.filter = async (req, res) => {
     try{
         console.log(req.body);
-        // let project = await Project.findById(req.body.project);
+        let project = await Project.findById(req.body.project);
         let issues = await Issue.find({labels: {$in : req.body.labels}, author : {$in: req.body.author}});
         console.log(issues);
-        return res.redirect('back');
-        // return res.render('project',{
-        //     tittle: 'Project Page',
-        //     project: project,
-        //     issues: issues
-        // });
+        // return res.redirect('back');
+        return res.render('project',{
+            tittle: 'Project Page',
+            project: project,
+            issues: issues
+        });
 
     }catch(err){
         console.log('error in searching the issue ', err);

@@ -1,32 +1,43 @@
-<link rel="stylesheet" href="/styles/home.css">
-<div id="create-project">
-    <h2>Create Project</h2>
-    <form action="/project/create" method="post">
-        <input type="text" name="name" placeholder="Enter Project Name"><br>
-        <textarea name="description" cols="30" rows="3" placeholder="Enter roject description"></textarea>
-        <br><input type="text" name="author" placeholder="Enter author name"><br>
-        <button type="submit">Submit</button>
-    </form>
+<link rel="stylesheet" href="/styles/addProject.css">
+<link rel="stylesheet" href="/styles/projectList.css">
+<div style="text-align: right;">
+    <button id="myBtn">+ Add Project</button>
 </div>
-<div id="projects-list">
-    <h1>Projects List</h1>
-    <div class="project">
-        <ul>
-            <% for(let i of projects) { %>
-                <a href="/project/info/<%= i._id%>">
-                    <li>
-                        <%= i.name %>
-                        <br>
-                        <%= i.description %>
-                        <br>
-                        <%= i.author %>
-                        <br>
-                        Issues:&nbsp; <%= i.issues.length %>
-                    </li>
-                </a>
-             <% } %>
-        </ul>
+<div id="modal" class="myModal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 style="text-align: center ; color: #04aa6d;">Enter Project Details</h2>
+        <form action="/project/create" method="post" >
+            <label for="name" class="bold"> Name : </label><br>
+            <input type="text" name="name" placeholder="Enter Project Name"><br>
+            <label for="description" class="bold">Description : </label><br>
+            <textarea name="description" cols="50" rows="3" placeholder="Enter roject description"></textarea>
+            <br>
+            <label for="author" class="bold">Author :</label><br>  <input type="text" name="author" placeholder="Enter author name"><br>
+            <br><button id="btn" type="submit">Submit</button>
+        </form>
     </div>
 </div>
+<div>
+    <h1>Projects List</h1>
+</div>
+<div id="projects-list">
+    <% for(let i of projects) { %>
+    <div class="project">
+        <ul style="list-style-type: none;"> 
+                <a href="/project/info/<%= i._id%>" style="text-decoration:none;">
+                    <li>
+                       <h2 style="text-align: center;"><%= i.name %></h2> 
+                        <span>Description : <%= i.description %></span>
+                        <br>
+                        <span>Author : <%= i.author %></span> <br>
+                        <span style="color: #e22945;">Issues:&nbsp; <%= i.issues.length %></span> 
+                    </li>
+                </a>
+        </ul>
+    </div>
+    <% } %>
+</div>
+<script src="/scripts/addProject.js"></script>
 
 

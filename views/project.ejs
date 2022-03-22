@@ -45,14 +45,15 @@
     </select>
     <label for="author">Select Author</label>
     <select name="author" multiple>
-        <% for(let issue of project.issues) { %>
+        <% for(let issue of issues) { %>
             <option value="<%= issue.author %>"><%= issue.author %></option>
          <% } %>
     </select>
+    <input type="hidden" name="project" value= '<%= project._id %>'><br>
     <button type="submit">Submit</button>
 </form>
 <%= project.name %>
-<% for(let issue of project.issues) { %>
+<% for(let issue of issues) { %>
     <li>
         <%= issue.title %> <br>
         <% for(let label of issue.labels) { %>
