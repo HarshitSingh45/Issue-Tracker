@@ -7,14 +7,15 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2 style="text-align: center ; color: #04aa6d;">Enter Project Details</h2>
-        <form action="/project/create" method="post" >
+        <form action="/project/create" method="post" id="project-create-form">
             <label for="name" class="bold"> Name : </label><br>
             <input type="text" name="name" placeholder="Enter Project Name"><br>
             <label for="description" class="bold">Description : </label><br>
             <textarea name="description" cols="50" rows="3" placeholder="Enter roject description"></textarea>
             <br>
             <label for="author" class="bold">Author :</label><br>  <input type="text" name="author" placeholder="Enter author name"><br>
-            <br><button id="btn" type="submit">Submit</button>
+            <br><input type="submit" value="Post" id="btn">
+            <!-- <button id="btn" type="submit">Submit</button> -->
         </form>
     </div>
 </div>
@@ -38,6 +39,7 @@
     </div>
     <% } %>
 </div>
+<script src="/scripts/projectAjax.js"></script>
 <script src="/scripts/addProject.js"></script>
 
 

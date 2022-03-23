@@ -3,9 +3,15 @@ const Issue = require('../models/issue');
 
 module.exports.create = async (req, res) =>{
     try{
+        console.log('inside controller');
         let project = await Project.create(req.body);
         console.log(project);
-        return res.redirect('back');
+        return res.json({
+            data: {
+                project: project,
+            },
+            message: 'project created successfully'
+        })
     }catch(err){
         console.log('Error in creating project ', err);
         return req.redirect('back');
