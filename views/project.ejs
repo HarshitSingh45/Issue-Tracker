@@ -3,6 +3,7 @@
 <div id="heading">
     <h1 style="text-align: center;"><%= project.name %> - Issues</h1>
 </div>
+
 <div id="modal" class="myModal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -24,15 +25,17 @@
             </select><br>
             <input type="text" name="author" placeholder="Enter author name"><br>
             <input type="hidden" name="project" value= '<%= project._id %>'><br>
-            <button id="btn" type="submit">Submit</button>
+            <input type="submit" value="submit" id="create-btn">
+            <!-- <button id="create-btn" type="submit">Submit</button> -->
         </form> 
     </div>
 </div>
 <div id="search-issue">
-    <form action="/project/search" method="post">
+    <form action="/project/search" method="post" id="search-form">
         <input type="hidden" name="project" value= '<%= project._id %>'>
         <input id="search-title" type="text" name="search" placeholder="Enter title to search">
-        <button id="sbtn" type="submit">Submit</button>
+        <input type="submit" value="Submit" id="sbtn">
+        <!-- <button id="sbtn" type="submit">Submit</button> -->
     </form> 
 </div>
 <div id="filters">
@@ -76,9 +79,11 @@
             <p><span class="green">Issue Description </span> : <%= issue.description %></p>
             <p><span class="green">Author </span> : <%= issue.author %> </p>
             <p><span class="green">Issue - Labels</span> :</p>
-            <% for(let label of issue.labels) { %>
-                <span class="label"><%= label %></span>
-            <% } %>
+            <div id="label-<%= issue._id %>">
+                <% for(let label of issue.labels) { %>
+                    <span class="label"><%= label %></span>
+                <% } %>
+            </div>
         </div>
     <% } %>
 </div>
@@ -88,4 +93,6 @@
 
 <script src="/scripts/addIssue.js"></script>
 <script src="/scripts/issue.js"></script>
+<script src="/scripts/searchIssue.js"></script>
+
 

@@ -38,14 +38,21 @@ module.exports.search = async (req, res) => {
     try{
         console.log(req.body);
         // console.log()
-        let project = await Project.findById(req.body.project);
+        let project = await Project.findById(req.body.project).populate('issues');
         let issues = await Issue.find({project: req.body.project, title: req.body.search});
         console.log(issues);
-        return res.render('project',{
-            tittle: 'Project Page',
-            project: project,
-            issues: issues
-        });
+        return res.json({
+            data: {
+                project: project,
+                issues: issues
+            },
+            message: 'search result'
+        })
+        // return res.render('project',{
+        //     tittle: 'Project Page',
+        //     project: project,
+        //     issues: issues
+        // });
 
     }catch(err){
         console.log('error in searching the issue ', err);
@@ -55,10 +62,23 @@ module.exports.search = async (req, res) => {
 module.exports.filter = async (req, res) => {
     try{
         console.log(req.body);
+        console.log(req.body.author);
+        console.log(req.body.labels);
+
         let project = await Project.findById(req.body.project);
-        let issues = await Issue.find({labels: {$in : req.body.labels}, author : {$in: req.body.author}});
+        var issues;
+        if(req.body.author == undefined && req.body.labels == undefined){
+            issues = await Issue.find({});
+        }
+        else if(req.body.author == undefined){
+            issues = await Issue.find({labels: {$in : req.body.labels}});
+        }
+        else if(req.body.labels == undefined){
+            issues = await Issue.find({author: {$in : req.body.author}});
+        }else{
+            issues = await Issue.find({labels: {$in : req.body.labels}, author : {$in: req.body.author}});
+        }
         console.log(issues);
-        // return res.redirect('back');
         return res.render('project',{
             tittle: 'Project Page',
             project: project,

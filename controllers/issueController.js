@@ -7,5 +7,10 @@ module.exports.create = async (req, res) => {
     let project = await Project.findById(req.body.project);
     project.issues.push(issue.id);
     project.save();
-    return res.redirect('back');
+    let issues = await Issue.find({project: req.body.project});  
+    return res.render('project',{
+        tittle: 'Project Page',
+        project: project,
+        issues: issues
+    });
 }
