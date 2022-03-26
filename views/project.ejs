@@ -9,9 +9,12 @@
         <span class="close">&times;</span>
         <h2 style="text-align: center ; color: #04aa6d;">Enter Issue Details</h2>
         <form action="/issue/create" method="post">
-            <input type="text" name="title" placeholder="Enter title of your issue"><br>
-            <textarea name="description" id="" cols="30" rows="3" placeholder="Enter issue desription"></textarea><br>
-            <label for="labels">Select Issue label</label><br>
+            <label>Enter Title of Issue :</label><br>
+            <input type="text" name="title" placeholder="Enter title of your issue"><br><br>
+            <label>Enter Description :</label><br>
+            <textarea name="description" id="" cols="30" rows="3" placeholder="Enter issue desription"></textarea><br><br>
+            <!-- <label for="labels">Select Issue label</label><br> -->
+            <label>Select Isssue Labels :</label><br>
             <select name="labels"  multiple>
                 <option value="bug">bug</option>
                 <option value="dependencies">dependencies</option>
@@ -22,8 +25,9 @@
                 <option value="invalid">invalid</option>
                 <option value="question">question</option>
                 <option value="wontfix">wontfix</option>
-            </select><br>
-            <input type="text" name="author" placeholder="Enter author name"><br>
+            </select><br><br>
+            <label>Enter Author Name :</label><br>
+            <input type="text" name="author" placeholder="Enter author name">
             <input type="hidden" name="project" value= '<%= project._id %>'><br>
             <input type="submit" value="submit" id="create-btn">
             <!-- <button id="create-btn" type="submit">Submit</button> -->
@@ -44,7 +48,7 @@
    </div>
     <div id="select-filter">
         <span id="hbtn" class="close">&times;</span>
-        <form action="/project/filter" method="post">
+        <form action="/project/filter" method="post" id="filter-form">
             <label for="labels">Select Label</label><br>
             <input type="checkbox" name="labels" value="bug">Bug &nbsp;
             <input type="checkbox" name="labels" value="dependencies">dependencies &nbsp;
@@ -57,9 +61,17 @@
             <input type="checkbox" name="labels" value="wontfix">wontfix
              <br><br>
             <label for="author">Select Author</label><br>
+                <% let authors = []; %>
                 <% for(let issue of issues) { %>
-                    <input type="checkbox" name="author" value="<%= issue.author %>"><%= issue.author %>
+                    <% authors.push(issue.author) %>
+                <% } %>
+                <% let uniqueAuthor = authors.filter((x, i, a) => a.indexOf(x) == i) %>
+                <% for(let author of uniqueAuthor) { %>
+                    <input type="checkbox" name="author" value="<%= author %>"><%= author %>
                  <% } %>
+                <!-- <% for(let issue of issues) { %>
+                    <input type="checkbox" name="author" value="<%= issue.author %>"><%= issue.author %>
+                 <% } %> -->
              <br><br>
             <input type="hidden" name="project" value= '<%= project._id %>'>
             <div style="text-align: center;">
@@ -94,5 +106,7 @@
 <script src="/scripts/addIssue.js"></script>
 <script src="/scripts/issue.js"></script>
 <script src="/scripts/searchIssue.js"></script>
+<script src="/scripts/filterIssue.js"></script>
+
 
 

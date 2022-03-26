@@ -79,11 +79,17 @@ module.exports.filter = async (req, res) => {
             issues = await Issue.find({labels: {$in : req.body.labels}, author : {$in: req.body.author}});
         }
         console.log(issues);
-        return res.render('project',{
-            tittle: 'Project Page',
-            project: project,
-            issues: issues
+        return res.json({
+            data: {
+                project: project,
+                issues: issues
+            }
         });
+        // return res.render('project',{
+        //     tittle: 'Project Page',
+        //     project: project,
+        //     issues: issues
+        // });
 
     }catch(err){
         console.log('error in searching the issue ', err);
