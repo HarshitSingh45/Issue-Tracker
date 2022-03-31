@@ -1,9 +1,11 @@
 {
+    // ajax request for diaplaying issues after asdding filters
     let filterForm = function(){
         let newFilterForm = $('#filter-form');
         newFilterForm.submit(function(e){
             e.preventDefault();
             $('#issue-container').html("");
+
             $.ajax({
                 type: 'post',
                 url: '/project/filter',
@@ -11,9 +13,12 @@
                 success: function(data){
                     console.log(data);
                     for(let issue of data.data.issues){
+                        // creating new dom
                         let filterResult = newfilterDOM(issue);
+                        // appending it into the container
                         $('#issue-container').append(filterResult);
                         $(`#label-${issue._id}`).html("");
+                        // appending all issue labels
                         for(let label of issue.labels){
                             let labelDOM = newLabelDOM(label);
                             $(`#label-${issue._id}`).append(labelDOM);
@@ -23,6 +28,7 @@
             })
         })
     }
+    // creating neww issue DOM
     function newfilterDOM(issue){
         return $(`<div id="issue">
                     <div style="text-align: center;">
@@ -36,6 +42,7 @@
                     </div>
                 </div>`)
     }
+    // creating label dom for issue
     function newLabelDOM(label){
         return $(`<span class="label">${label}</span>`)
     }

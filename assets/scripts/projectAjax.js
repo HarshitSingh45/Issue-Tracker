@@ -1,7 +1,9 @@
 {
+    // ajax request to create new project and add into the the home page
     let createProject = function(){
         console.log('hello there');
         let newProjectForm = $('#project-create-form');
+        // submitting form
         newProjectForm.submit(function(e){
             e.preventDefault();
             $('#modal').css('display', 'none');
@@ -12,15 +14,19 @@
                 data: newProjectForm.serialize(), 
                 success: function(data){
                     console.log(data);
+                    // creating project dom
                     let project = newProjectDOM(data.data.project);
+                    // appending project into the home page
                     $('#projects-list').append(project);
                 },
+                // if error occured
                 error: function(err){
                     console.log(err.responseText);
                 }
             })
         })
     }
+    // creating new project dom
     function newProjectDOM(project){
         return $(`<div class="project">
                     <ul style="list-style-type: none;"> 

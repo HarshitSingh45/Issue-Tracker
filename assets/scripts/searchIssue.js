@@ -1,6 +1,8 @@
 {
+    // ajax request for diaplaying all the issues retrieved after user searched
     let searchForm = function(){
         let newSearchForm = $('#search-form');
+        // submitting form
         newSearchForm.submit(function(e){
             e.preventDefault();
             $('#issue-container').html("");
@@ -11,9 +13,12 @@
                 success: function(data){
                     console.log(data);
                     for(let issue of data.data.issues){
+                        // cresting issue dom
                         let searchResult = newsearchDOM(issue);
+                        // appending issue into the container
                         $('#issue-container').append(searchResult);
                         $(`#label-${issue._id}`).html("");
+                        // appending all labels onto the issue
                         for(let label of issue.labels){
                             let labelDOM = newLabelDOM(label);
                             $(`#label-${issue._id}`).append(labelDOM);
@@ -23,6 +28,7 @@
             })
         })
     }
+    // creating dom for issues
     function newsearchDOM(issue){
         return $(`<div id="issue">
                     <div style="text-align: center;">

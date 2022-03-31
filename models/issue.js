@@ -1,5 +1,6 @@
-const { type } = require('express/lib/response');
 const mongoose = require('mongoose');
+
+// schema for issue
 const issueSchema = new mongoose.Schema({
     title:{
         type: String,
@@ -26,5 +27,7 @@ const issueSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// collection 
 const Issue =  mongoose.model('Issue', issueSchema);
+// exporting issues
 module.exports = Issue;
