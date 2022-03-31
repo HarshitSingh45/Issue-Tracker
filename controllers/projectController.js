@@ -49,7 +49,17 @@ module.exports.search = async (req, res) => {
         // fetching the project with the help of id and populating all the issues 
         let project = await Project.findById(req.body.project).populate('issues');
         // fetching issues according to searched text
-        let issues = await Issue.find({project: req.body.project, title: req.body.search});
+        // let issues = await Issue.find({project: req.body.project, title: req.body.search});
+        let issues = await Issue.find({
+            $or: [
+                {
+                    project: req.body.project, title: req.body.search
+                },
+                {
+                    project: req.body.project, description: req.body.search
+                }
+            ]
+        });
         console.log(issues);
         // returning issues in json format
         return res.json({
